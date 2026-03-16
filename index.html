@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mandroka Vola v3.1</title>
+    <title>Mandroka Vola v4.0</title>
     <style>
         :root {
             --bg-dark: #080a0e;
@@ -25,43 +25,24 @@
 
         .app-container { width: 100%; max-width: 420px; padding: 20px; box-sizing: border-box; }
 
-        /* PEJY 1: INPUT */
-        #inputPage { display: block; text-align: center; padding-top: 30px; }
-        .header-title { font-size: 1.8rem; color: var(--accent-orange); font-weight: 900; margin-bottom: 30px; }
+        /* HEADER */
+        .header-title { text-align: center; font-size: 1.8rem; color: var(--accent-orange); font-weight: 900; margin-bottom: 25px; text-transform: uppercase; }
+
+        /* PAGES */
+        .page { display: none; animation: fadeIn 0.4s ease; }
+        #inputPage { display: block; }
+
+        /* CARDS */
+        .input-card { background: var(--card-bg); padding: 30px 20px; border-radius: 25px; border: 1px solid #222; text-align: center; }
+        .time-inputs { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin: 15px 0 25px 0; }
         
-        .input-card {
-            background: var(--card-bg);
-            padding: 30px 20px;
-            border-radius: 25px;
-            border: 1px solid #222;
-        }
-
-        .time-inputs {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 25px;
-        }
-
-        .field { text-align: left; margin-bottom: 20px; }
-        label { display: block; font-size: 0.7rem; color: var(--text-gray); margin-bottom: 8px; font-weight: bold; text-transform: uppercase; }
-
         input {
-            width: 100%;
-            padding: 15px;
-            background: var(--input-bg);
-            border: 1px solid #333;
-            border-radius: 12px;
-            color: var(--accent-orange);
-            font-size: 1.2rem;
-            font-weight: bold;
-            text-align: center;
-            box-sizing: border-box;
-            outline: none;
+            width: 100%; padding: 15px; background: var(--input-bg); border: 1px solid #333;
+            border-radius: 12px; color: var(--accent-orange); font-size: 1.2rem; font-weight: bold;
+            text-align: center; box-sizing: border-box; outline: none;
         }
 
-        /* PEJY 2: RESULTAT (Mitovy amin'ny teo fa madio kokoa) */
-        #resultPage { display: none; text-align: center; }
+        /* CIRCLE & TOURS */
         .main-circle {
             width: 220px; height: 220px; border: 4px solid #332111; border-radius: 50%;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
@@ -75,48 +56,51 @@
         }
         .main-val { font-size: 2.8rem; color: var(--accent-orange); font-weight: bold; }
         .tours-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
-        .tour-card { background: var(--card-bg); padding: 15px; border-radius: 18px; border: 1px solid #222; }
-        .mini-list { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 15px 0; }
-        .mini-card { background: #161b22; padding: 10px 5px; border-radius: 10px; border-bottom: 3px solid var(--accent-orange); }
-        
-        .btn-predict {
-            background: linear-gradient(135deg, #f39c12, #e67e22);
-            border: none; padding: 20px; border-radius: 15px; color: white;
-            font-weight: bold; font-size: 1.1rem; width: 100%; cursor: pointer;
+        .tour-card { background: var(--card-bg); padding: 15px; border-radius: 18px; border: 1px solid #222; text-align: center; }
+
+        /* HISTORIQUE LIST */
+        .hist-item {
+            background: var(--card-bg); padding: 15px; border-radius: 15px; margin-bottom: 10px;
+            display: flex; justify-content: space-between; align-items: center; border-left: 4px solid var(--accent-orange);
         }
-        .btn-back { background: transparent; border: 1px solid #333; color: var(--text-gray); padding: 12px; border-radius: 12px; width: 100%; margin-top: 15px; }
+
+        /* BUTTONS */
+        .btn-predict {
+            background: linear-gradient(135deg, #f39c12, #e67e22); border: none; padding: 20px;
+            border-radius: 15px; color: white; font-weight: bold; font-size: 1.1rem; width: 100%; cursor: pointer; margin-top: 10px;
+        }
+        .btn-nav { background: transparent; border: 1px solid #333; color: var(--text-gray); padding: 12px; border-radius: 12px; width: 100%; margin-top: 15px; cursor: pointer; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
 <div class="app-container">
-    <div id="inputPage">
-        <div class="header-title">MANDROKA VOLA</div>
+    <div class="header-title">MANDROKA VOLA</div>
+
+    <div id="inputPage" class="page">
         <div class="input-card">
-            <label>🕒 ORA FIANOMBOHANA (H : M : S)</label>
+            <label style="font-size: 0.7rem; color: var(--text-gray); font-weight: bold;">🕒 ORA FIANOMBOHANA (H:M:S)</label>
             <div class="time-inputs">
-                <input type="number" id="h" placeholder="Ora" min="0" max="23">
-                <input type="number" id="m" placeholder="Min" min="0" max="59">
-                <input type="number" id="s" placeholder="Seg" min="0" max="59">
+                <input type="number" id="h" placeholder="Ora">
+                <input type="number" id="m" placeholder="Min">
+                <input type="number" id="s" placeholder="Seg">
             </div>
-            
-            <div class="field">
-                <label>📈 MULTIPLICATEUR CIBLE</label>
-                <input type="number" id="multC" placeholder="10">
-            </div>
-            
+            <label style="font-size: 0.7rem; color: var(--text-gray); font-weight: bold;">📈 MULTIPLICATEUR CIBLE</label>
+            <input type="number" id="multC" value="10">
             <button class="btn-predict" onclick="runCalculation()">🚀 PRÉDIRE</button>
+            <button class="btn-nav" onclick="showPage('histPage')">📜 HISTORIQUE</button>
         </div>
     </div>
 
-    <div id="resultPage">
+    <div id="resultPage" class="page">
         <div class="main-circle">
             <div style="font-size: 0.7rem; color: var(--text-gray);">Côte prédite</div>
             <div class="main-val" id="resMain">×0.00</div>
-            <div class="sub-val" id="resSub" style="color: #8e6d45; font-weight: bold;">×0.00</div>
-            <div style="font-size: 0.8rem; color: var(--text-gray);" id="resTime">00:00:00</div>
+            <div id="resSub" style="color: #8e6d45; font-weight: bold;">×0.00</div>
+            <div id="resTime" style="font-size: 0.8rem; color: var(--text-gray);">00:00:00</div>
         </div>
-
         <div class="tours-grid">
             <div class="tour-card">
                 <div style="font-size: 0.7rem; color: var(--accent-orange);">TOUR 1</div>
@@ -129,72 +113,87 @@
                 <div id="t2Val" style="font-size: 1.2rem; font-weight: bold; color: var(--accent-orange);">×0.00</div>
             </div>
         </div>
+        <button class="btn-nav" onclick="showPage('inputPage')">⬅️ HANAVAO ORA</button>
+    </div>
 
-        <div style="color: var(--accent-orange); font-size: 0.85rem; text-align: left; font-weight: bold;">⭐ Tours prédits</div>
-        <div class="mini-list" id="miniList"></div>
-
-        <button class="btn-back" onclick="goBack()">⬅️ HANAVAO ORA</button>
+    <div id="histPage" class="page">
+        <h3 style="color: var(--accent-orange); border-bottom: 1px solid #333; padding-bottom: 10px;">VOKATRA TEOPAKELO</h3>
+        <div id="histContent">
+            <p style="text-align: center; color: var(--text-gray);">Tsy mbola misy historique.</p>
+        </div>
+        <button class="btn-nav" onclick="showPage('inputPage')">⬅️ HIVERINA</button>
+        <button class="btn-nav" style="color: #ff4444; border-color: #442222;" onclick="clearHistory()">🗑️ FAFAFA DAHOLO</button>
     </div>
 </div>
 
 <script>
-    // Fenoy ho azy amin'ny ora izao
+    let historyData = JSON.parse(localStorage.getItem('mandroka_history')) || [];
+
     window.onload = function() {
         const now = new Date();
         document.getElementById('h').value = now.getHours();
         document.getElementById('m').value = now.getMinutes();
         document.getElementById('s').value = now.getSeconds();
+        updateHistoryUI();
     }
 
-    function formatTime(h, m, s) {
-        return String(h).padStart(2, '0') + ":" + String(m).padStart(2, '0') + ":" + String(s).padStart(2, '0');
-    }
-
-    function addTime(h, m, s, addMin, addSec) {
-        let d = new Date();
-        d.setHours(h, m, s);
-        d.setMinutes(d.getMinutes() + addMin);
-        d.setSeconds(d.getSeconds() + addSec);
-        return formatTime(d.getHours(), d.getMinutes(), d.getSeconds());
+    function showPage(pageId) {
+        document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+        document.getElementById(pageId).style.display = 'block';
     }
 
     function runCalculation() {
-        const hour = parseInt(document.getElementById('h').value) || 0;
-        const min = parseInt(document.getElementById('m').value) || 0;
-        const sec = parseInt(document.getElementById('s').value) || 0;
+        const hh = parseInt(document.getElementById('h').value) || 0;
+        const mm = parseInt(document.getElementById('m').value) || 0;
+        const ss = parseInt(document.getElementById('s').value) || 0;
         const target = parseFloat(document.getElementById('multC').value) || 10;
 
         const mainVal = (Math.random() * (target + 15) + target).toFixed(2);
-        const subVal = (Math.random() * 5 + 2).toFixed(2);
+        const timeStr = String(hh).padStart(2,'0')+":"+String(mm).padStart(2,'0')+":"+String(ss).padStart(2,'0');
 
-        // Kajy ny ora mandroso
-        const timeT1 = addTime(hour, min, sec, 1, Math.floor(Math.random() * 40));
-        const timeT2 = addTime(hour, min, sec, 3, Math.floor(Math.random() * 50));
-
+        // Display results
         document.getElementById('resMain').innerText = "×" + mainVal;
-        document.getElementById('resSub').innerText = "×" + subVal;
-        document.getElementById('resTime').innerText = timeT2;
-        document.getElementById('t1Time').innerText = timeT1;
-        document.getElementById('t1Val').innerText = "×" + subVal;
-        document.getElementById('t2Time').innerText = timeT2;
+        document.getElementById('resSub').innerText = "×" + (mainVal/4).toFixed(2);
+        document.getElementById('resTime').innerText = timeStr;
+        document.getElementById('t1Time').innerText = timeStr;
+        document.getElementById('t1Val').innerText = "×" + (mainVal/4).toFixed(2);
+        document.getElementById('t2Time').innerText = timeStr;
         document.getElementById('t2Val').innerText = "×" + mainVal;
 
-        const list = document.getElementById('miniList');
-        list.innerHTML = "";
-        for(let i=0; i<4; i++) {
-            const v = (Math.random() * 20 + 20).toFixed(2);
-            const t = addTime(hour, min, sec, 5 + (i * 4), Math.floor(Math.random() * 59));
-            list.innerHTML += `<div class="mini-card"><div style="color:var(--accent-orange); font-size:0.8rem; font-weight:bold;">×${v}</div><div style="font-size:0.5rem; color:var(--text-gray);">${t}</div></div>`;
-        }
+        // Save to History
+        const entry = { time: timeStr, cote: mainVal, date: new Date().toLocaleDateString() };
+        historyData.unshift(entry);
+        if(historyData.length > 10) historyData.pop(); // Garder 10 max
+        localStorage.setItem('mandroka_history', JSON.stringify(historyData));
+        updateHistoryUI();
 
-        document.getElementById('inputPage').style.display = 'none';
-        document.getElementById('resultPage').style.display = 'block';
+        showPage('resultPage');
         if (navigator.vibrate) navigator.vibrate(70);
     }
 
-    function goBack() {
-        document.getElementById('inputPage').style.display = 'block';
-        document.getElementById('resultPage').style.display = 'none';
+    function updateHistoryUI() {
+        const container = document.getElementById('histContent');
+        if (historyData.length === 0) {
+            container.innerHTML = '<p style="text-align: center; color: var(--text-gray);">Tsy mbola misy historique.</p>';
+            return;
+        }
+        container.innerHTML = historyData.map(item => `
+            <div class="hist-item">
+                <div>
+                    <div style="font-size: 0.6rem; color: var(--text-gray);">${item.date}</div>
+                    <div style="font-weight: bold; color: var(--accent-orange); font-size: 1.1rem;">×${item.cote}</div>
+                </div>
+                <div style="font-family: monospace; color: var(--text-gray);">${item.time}</div>
+            </div>
+        `).join('');
+    }
+
+    function clearHistory() {
+        if(confirm("Tena hovafana daholo ny historique?")) {
+            historyData = [];
+            localStorage.setItem('mandroka_history', JSON.stringify(historyData));
+            updateHistoryUI();
+        }
     }
 </script>
 
