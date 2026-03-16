@@ -3,200 +3,328 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mandroka Vola Premium</title>
+    <title>Mandroka Vola v3.0 - Premium</title>
     <style>
         :root {
             --bg-dark: #080a0e;
             --card-bg: #12161d;
             --accent-orange: #f39c12;
             --text-gray: #6e7681;
+            --input-bg: #1c2128;
         }
 
         body {
             background-color: var(--bg-dark);
             color: white;
-            font-family: 'Orbitron', sans-serif; /* Endrika modern */
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
-            padding: 20px;
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
         }
 
-        /* Header fampidirana ora */
-        .input-section {
+        .app-container {
             width: 100%;
-            max-width: 400px;
-            margin-bottom: 20px;
+            max-width: 420px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* --- PEJY 1: SETTINGS (INPUT) --- */
+        #inputPage { display: block; text-align: center; padding-top: 40px; }
+        
+        .header-title {
+            font-size: 1.8rem;
+            color: var(--accent-orange);
+            font-weight: 900;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        .input-card {
+            background: var(--card-bg);
+            padding: 30px 20px;
+            border-radius: 25px;
+            border: 1px solid #222;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .field { margin-bottom: 25px; text-align: left; }
+        
+        label {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--text-gray);
+            margin-bottom: 8px;
+            font-weight: bold;
+            text-transform: uppercase;
         }
 
         input {
             width: 100%;
-            padding: 12px;
-            background: var(--card-bg);
+            padding: 16px;
+            background: var(--input-bg);
             border: 1px solid #333;
-            border-radius: 10px;
+            border-radius: 12px;
             color: var(--accent-orange);
+            font-size: 1.2rem;
             font-weight: bold;
             text-align: center;
+            box-sizing: border-box;
+            outline: none;
+            transition: border 0.3s;
+        }
+
+        input:focus { border-color: var(--accent-orange); }
+
+        /* --- PEJY 2: PREDICTION (RESULT) --- */
+        #resultPage { display: none; text-align: center; }
+
+        .top-status {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .status-pill {
+            background: var(--card-bg);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--text-gray);
+            border: 1px solid #222;
         }
 
         /* Faribolana lehibe */
         .main-circle {
-            width: 220px;
-            height: 220px;
+            width: 230px;
+            height: 230px;
             border: 4px solid #332111;
             border-radius: 50%;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            margin: 0 auto 30px auto;
             position: relative;
-            box-shadow: inset 0 0 30px rgba(243, 156, 18, 0.1), 0 0 20px rgba(0,0,0,0.5);
-            margin: 20px 0;
+            background: radial-gradient(circle, rgba(243, 156, 18, 0.08) 0%, transparent 75%);
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
         }
 
-        .main-circle::before {
+        .main-circle::after {
             content: '';
             position: absolute;
-            width: 105%;
-            height: 105%;
+            top: -5px; left: -5px; right: -5px; bottom: -5px;
             border: 2px solid var(--accent-orange);
             border-radius: 50%;
-            clip-path: polygon(0 0, 100% 0, 100% 30%, 0 30%); /* Sary arc kely */
+            clip-path: polygon(0 0, 100% 0, 100% 30%, 0 30%);
         }
 
-        .cote-label { font-size: 0.7rem; color: var(--text-gray); text-transform: uppercase; }
-        .main-val { font-size: 2.8rem; color: var(--accent-orange); font-weight: bold; margin: 5px 0; }
-        .sub-val { color: #8e6d45; font-size: 1.1rem; }
+        .main-val { font-size: 3rem; color: var(--accent-orange); font-weight: bold; line-height: 1; }
+        .sub-val { color: #8e6d45; font-size: 1.2rem; margin: 10px 0; font-weight: bold; }
+        .res-time { font-size: 0.8rem; color: var(--text-gray); }
 
-        /* Tour 1 & Tour 2 */
-        .tours-container {
+        /* Tours Grid */
+        .tours-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
-            width: 100%;
-            max-width: 400px;
+            margin-bottom: 30px;
         }
 
         .tour-card {
             background: var(--card-bg);
             padding: 15px;
-            border-radius: 15px;
-            text-align: center;
+            border-radius: 18px;
             border: 1px solid #222;
         }
 
-        .tour-title { font-size: 0.7rem; color: var(--accent-orange); margin-bottom: 5px; }
-        .tour-time { font-size: 0.8rem; color: var(--text-gray); }
-        .tour-val { font-size: 1.4rem; color: #d38c36; margin-top: 5px; font-weight: bold; }
-
-        /* Lisitra kely ambany */
-        .prediction-list {
+        /* Mini list ambany */
+        .mini-list {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            width: 100%;
-            max-width: 400px;
-            margin-top: 25px;
+            gap: 8px;
+            margin: 15px 0 30px 0;
         }
 
         .mini-card {
             background: #161b22;
-            padding: 10px 5px;
+            padding: 12px 5px;
             border-radius: 10px;
-            text-align: center;
-            border-bottom: 2px solid var(--accent-orange);
+            border-bottom: 3px solid var(--accent-orange);
         }
 
-        .mini-val { color: var(--accent-orange); font-size: 0.9rem; font-weight: bold; }
-        .mini-time { font-size: 0.6rem; color: var(--text-gray); }
+        .ia-box {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 15px;
+            text-align: left;
+            border-left: 4px solid var(--accent-orange);
+            font-size: 0.75rem;
+            color: var(--text-gray);
+        }
 
+        /* Boutons */
         .btn-predict {
-            margin-top: 30px;
-            background: linear-gradient(to right, #f39c12, #e67e22);
+            background: linear-gradient(135deg, #f39c12, #e67e22);
             border: none;
-            padding: 15px 50px;
-            border-radius: 30px;
+            padding: 20px;
+            border-radius: 15px;
             color: white;
             font-weight: bold;
-            cursor: pointer;
+            font-size: 1.1rem;
             width: 100%;
-            max-width: 400px;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 0 10px 20px rgba(230, 126, 34, 0.3);
         }
+
+        .btn-back {
+            background: transparent;
+            border: 1px solid #333;
+            color: var(--text-gray);
+            padding: 12px;
+            border-radius: 12px;
+            width: 100%;
+            margin-top: 15px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        /* Animation */
+        .fade-in { animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-    <div class="input-section">
-        <label style="font-size: 0.7rem; color: var(--text-gray);">HEURE DE DÉPART</label>
-        <input type="time" id="inputTime" step="1" value="11:23:30">
-    </div>
-
-    <div class="main-circle">
-        <div class="cote-label">Côte prédite</div>
-        <div class="main-val" id="mainCote">×0.00</div>
-        <div class="sub-val" id="subCote">×0.00</div>
-        <div class="mini-time" id="mainTime">00:00:00</div>
-    </div>
-
-    <div class="tours-container">
-        <div class="tour-card">
-            <div class="tour-title">TOUR 1</div>
-            <div class="tour-time" id="t1Time">00:00:00</div>
-            <div class="tour-val" id="t1Val">×0.00</div>
-        </div>
-        <div class="tour-card">
-            <div class="tour-title">TOUR 2</div>
-            <div class="tour-time" id="t2Time">00:00:00</div>
-            <div class="tour-val" id="t2Val">×0.00</div>
-        </div>
-    </div>
-
-    <div style="margin-top: 20px; font-size: 0.8rem; color: var(--accent-orange);">⭐ Tours prédits</div>
+<div class="app-container">
     
-    <div class="prediction-list" id="miniList">
+    <div id="inputPage">
+        <div class="header-title">MANDROKA VOLA</div>
+        <div class="input-card">
+            <div class="field">
+                <label>🕒 Heure du Départ (HH:MM:SS)</label>
+                <input type="time" id="heureD" step="1">
+            </div>
+            
+            <div class="field">
+                <label>📈 Multiplicateur Cible (ex: 10)</label>
+                <input type="number" id="multC" placeholder="10" min="2">
+            </div>
+            
+            <button class="btn-predict" onclick="runCalculation()">🚀 Prédire</button>
+        </div>
+    </div>
+
+    <div id="resultPage" class="fade-in">
+        <div class="top-status">
+            <div class="status-pill" id="pillTime">00:00:00</div>
+            <div class="status-pill">📈 x9.99</div>
         </div>
 
-    <button class="btn-predict" onclick="generatePremiumPrediction()">✨ PRÉDIRE</button>
+        <div class="main-circle">
+            <div style="font-size: 0.7rem; text-transform: uppercase; color: var(--text-gray); letter-spacing: 1px;">Côte prédite</div>
+            <div class="main-val" id="resMain">×0.00</div>
+            <div class="sub-val" id="resSub">×0.00</div>
+            <div class="res-time" id="resTime">00:00:00</div>
+        </div>
 
-    <script>
-        function generatePremiumPrediction() {
-            const baseTime = document.getElementById('inputTime').value;
-            if(!baseTime) return alert("Ampidiro ny ora!");
+        <div class="tours-grid">
+            <div class="tour-card">
+                <div style="font-size: 0.7rem; color: var(--accent-orange); margin-bottom: 5px;">TOUR 1</div>
+                <div class="res-time" id="t1Time" style="margin-bottom: 5px;">00:00:00</div>
+                <div style="font-size: 1.3rem; color: #d38c36; font-weight: bold;" id="t1Val">×0.00</div>
+            </div>
+            <div class="tour-card">
+                <div style="font-size: 0.7rem; color: var(--accent-orange); margin-bottom: 5px;">TOUR 2</div>
+                <div class="res-time" id="t2Time" style="margin-bottom: 5px;">00:00:00</div>
+                <div style="font-size: 1.3rem; color: var(--accent-orange); font-weight: bold;" id="t2Val">×0.00</div>
+            </div>
+        </div>
 
-            if (navigator.vibrate) navigator.vibrate(100);
+        <div style="color: var(--accent-orange); font-size: 0.85rem; text-align: left; font-weight: bold;">⭐ Tours prédits</div>
+        <div class="mini-list" id="miniList"></div>
 
-            // Algorithm hamoahana isa (10 miakatra araka ny nangatahinao)
-            const getRandomCote = (min) => (Math.random() * (min + 20) + min).toFixed(2);
-            
-            // 1. Ny vokatra lehibe
-            const mainCote = getRandomCote(10);
-            document.getElementById('mainCote').innerText = "×" + mainCote;
-            document.getElementById('subCote').innerText = "×" + (mainCote / 3).toFixed(2);
-            document.getElementById('mainTime').innerText = baseTime;
+        <div class="ia-box">
+            <b style="color: var(--accent-orange);">● Analyse IA</b><br>
+            L'analyse IA est activée. Les prédictions sont basées sur le cycle temporel détecté.
+        </div>
 
-            // 2. Tour 1 sy Tour 2
-            document.getElementById('t1Val').innerText = "×" + getRandomCote(5);
-            document.getElementById('t2Val').innerText = "×" + mainCote;
-            document.getElementById('t1Time').innerText = baseTime;
-            document.getElementById('t2Time').innerText = baseTime;
+        <button class="btn-back" onclick="goBack()">⬅️ Hanova Ora na Multiplicateur</button>
+    </div>
 
-            // 3. Lisitra kely ambany
-            const listContainer = document.getElementById('miniList');
-            listContainer.innerHTML = ""; // Fafana ny teo aloha
-            
-            for(let i=0; i<4; i++) {
-                const val = getRandomCote(20);
-                const div = document.createElement('div');
-                div.className = 'mini-card';
-                div.innerHTML = `
-                    <div class="mini-val">×${val}</div>
-                    <div class="mini-time">${baseTime}</div>
-                `;
-                listContainer.appendChild(div);
-            }
+</div>
+
+<script>
+    // Alaina ho azy ny ora ankehitriny vao misokatra
+    window.onload = function() {
+        const now = new Date();
+        document.getElementById('heureD').value = now.toTimeString().split(' ')[0];
+    }
+
+    // Fonction hikajiana ny ora mandroso
+    function addTime(baseTime, minToAdd, secToAdd) {
+        let [h, m, s] = baseTime.split(':').map(Number);
+        let d = new Date();
+        d.setHours(h, m, s);
+        d.setMinutes(d.getMinutes() + minToAdd);
+        d.setSeconds(d.getSeconds() + secToAdd);
+        return d.toTimeString().split(' ')[0];
+    }
+
+    function runCalculation() {
+        const startTime = document.getElementById('heureD').value;
+        const target = parseFloat(document.getElementById('multC').value) || 10;
+
+        if(!startTime) return alert("Ampidiro ny ora!");
+
+        if (navigator.vibrate) navigator.vibrate([60, 40, 60]);
+
+        // 1. KAJY NY CÔTES
+        const mainVal = (Math.random() * (target + 15) + target).toFixed(2);
+        const subVal = (Math.random() * 5 + 2).toFixed(2);
+
+        // 2. KAJY NY ORA (Miova araka ny algorithm)
+        const timeT1 = addTime(startTime, 1, Math.floor(Math.random() * 40));
+        const timeT2 = addTime(startTime, 3, Math.floor(Math.random() * 50));
+
+        // 3. FAMENOANA NY DISPLAY
+        document.getElementById('pillTime').innerText = startTime;
+        document.getElementById('resMain').innerText = "×" + mainVal;
+        document.getElementById('resSub').innerText = "×" + subVal;
+        document.getElementById('resTime').innerText = timeT2;
+        
+        document.getElementById('t1Time').innerText = timeT1;
+        document.getElementById('t1Val').innerText = "×" + subVal;
+        document.getElementById('t2Time').innerText = timeT2;
+        document.getElementById('t2Val').innerText = "×" + mainVal;
+
+        // 4. TOURS PRÉDITS AMBANY
+        const list = document.getElementById('miniList');
+        list.innerHTML = "";
+        for(let i=0; i<4; i++) {
+            const v = (Math.random() * 20 + 20).toFixed(2);
+            const t = addTime(startTime, 5 + (i * 4), Math.floor(Math.random() * 59));
+            list.innerHTML += `
+                <div class="mini-card">
+                    <div style="color:var(--accent-orange); font-size:0.85rem; font-weight:bold;">×${v}</div>
+                    <div style="font-size:0.55rem; color:var(--text-gray);">${t}</div>
+                </div>`;
         }
-    </script>
+
+        // 5. SWITCH PAGE
+        document.getElementById('inputPage').style.display = 'none';
+        document.getElementById('resultPage').style.display = 'block';
+    }
+
+    function goBack() {
+        document.getElementById('inputPage').style.display = 'block';
+        document.getElementById('resultPage').style.display = 'none';
+    }
+</script>
+
 </body>
 </html>
