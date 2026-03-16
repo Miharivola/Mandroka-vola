@@ -3,141 +3,200 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mandroka Vola v2.2</title>
+    <title>Mandroka Vola Premium</title>
     <style>
         :root {
-            --bg-color: #0b0e14;
-            --card-color: #1a1d23;
-            --accent-orange: linear-gradient(135deg, #ff4500, #ffa500);
-            --input-bg: #252a33;
+            --bg-dark: #080a0e;
+            --card-bg: #12161d;
+            --accent-orange: #f39c12;
+            --text-gray: #6e7681;
         }
 
         body {
-            background-color: var(--bg-color);
+            background-color: var(--bg-dark);
             color: white;
-            font-family: 'Segoe UI', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            font-family: 'Orbitron', sans-serif; /* Endrika modern */
             margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .app-container { width: 90%; max-width: 360px; text-align: center; }
-
-        h1 { color: #ff8c00; text-transform: uppercase; font-size: 1.4rem; margin-bottom: 5px; }
-
-        .main-card {
-            background-color: var(--card-color);
-            border-radius: 25px;
-            padding: 25px;
-            border: 1px solid #333;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+        /* Header fampidirana ora */
+        .input-section {
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 20px;
         }
-
-        .input-group { margin-bottom: 20px; text-align: left; }
-
-        label { color: #8b949e; font-size: 0.8rem; display: block; margin-bottom: 8px; font-weight: bold; }
 
         input {
             width: 100%;
-            padding: 15px;
-            background: var(--input-bg);
-            border: 1px solid #3d4451;
-            border-radius: 12px;
-            color: white;
-            font-size: 1.1rem;
-            box-sizing: border-box;
-            outline: none;
+            padding: 12px;
+            background: var(--card-bg);
+            border: 1px solid #333;
+            border-radius: 10px;
+            color: var(--accent-orange);
+            font-weight: bold;
+            text-align: center;
         }
 
-        input:focus { border-color: #ff8c00; }
-
-        .result-box {
-            background: rgba(255, 140, 0, 0.1);
-            border: 2px dashed #ff8c00;
-            border-radius: 15px;
-            padding: 20px;
+        /* Faribolana lehibe */
+        .main-circle {
+            width: 220px;
+            height: 220px;
+            border: 4px solid #332111;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            box-shadow: inset 0 0 30px rgba(243, 156, 18, 0.1), 0 0 20px rgba(0,0,0,0.5);
             margin: 20px 0;
-            display: none; /* Afatotra rehefa misy vokatra */
         }
 
-        .result-val { font-size: 2.5rem; color: #ffcc00; font-weight: bold; display: block; }
+        .main-circle::before {
+            content: '';
+            position: absolute;
+            width: 105%;
+            height: 105%;
+            border: 2px solid var(--accent-orange);
+            border-radius: 50%;
+            clip-path: polygon(0 0, 100% 0, 100% 30%, 0 30%); /* Sary arc kely */
+        }
 
-        .predict-btn {
-            background: var(--accent-orange);
-            border: none;
+        .cote-label { font-size: 0.7rem; color: var(--text-gray); text-transform: uppercase; }
+        .main-val { font-size: 2.8rem; color: var(--accent-orange); font-weight: bold; margin: 5px 0; }
+        .sub-val { color: #8e6d45; font-size: 1.1rem; }
+
+        /* Tour 1 & Tour 2 */
+        .tours-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
             width: 100%;
-            padding: 18px;
-            border-radius: 20px;
+            max-width: 400px;
+        }
+
+        .tour-card {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid #222;
+        }
+
+        .tour-title { font-size: 0.7rem; color: var(--accent-orange); margin-bottom: 5px; }
+        .tour-time { font-size: 0.8rem; color: var(--text-gray); }
+        .tour-val { font-size: 1.4rem; color: #d38c36; margin-top: 5px; font-weight: bold; }
+
+        /* Lisitra kely ambany */
+        .prediction-list {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            width: 100%;
+            max-width: 400px;
+            margin-top: 25px;
+        }
+
+        .mini-card {
+            background: #161b22;
+            padding: 10px 5px;
+            border-radius: 10px;
+            text-align: center;
+            border-bottom: 2px solid var(--accent-orange);
+        }
+
+        .mini-val { color: var(--accent-orange); font-size: 0.9rem; font-weight: bold; }
+        .mini-time { font-size: 0.6rem; color: var(--text-gray); }
+
+        .btn-predict {
+            margin-top: 30px;
+            background: linear-gradient(to right, #f39c12, #e67e22);
+            border: none;
+            padding: 15px 50px;
+            border-radius: 30px;
             color: white;
             font-weight: bold;
-            font-size: 1.2rem;
             cursor: pointer;
-            text-transform: uppercase;
-            box-shadow: 0 5px 15px rgba(255, 69, 0, 0.4);
+            width: 100%;
+            max-width: 400px;
         }
     </style>
 </head>
 <body>
 
-<div class="app-container">
-    <h1>MANDROKA VOLA 💰</h1>
-    
-    <div class="main-card">
-        <div class="input-group">
-            <label>🕒 HEURE DU DÉPART (HH:MM:SS)</label>
-            <input type="time" id="startTime" step="1" value="17:03:00">
-        </div>
-
-        <div class="input-group">
-            <label>📈 MULTIPLICATEUR CIBLE (MIN 10x)</label>
-            <input type="number" id="targetMult" placeholder="Ohatra: 10" min="10">
-        </div>
-
-        <div id="resultCard" class="result-box">
-            <span style="font-size: 0.8rem; color: #aaa;">VINANY MANARAKA:</span>
-            <span class="result-val" id="predictionText">0.00x</span>
-        </div>
-
-        <button class="predict-btn" onclick="calculateMandroka()">✨ PRÉDIRE</button>
+    <div class="input-section">
+        <label style="font-size: 0.7rem; color: var(--text-gray);">HEURE DE DÉPART</label>
+        <input type="time" id="inputTime" step="1" value="11:23:30">
     </div>
-</div>
 
-<script>
-    function calculateMandroka() {
-        const startTime = document.getElementById('startTime').value;
-        const targetMult = parseFloat(document.getElementById('targetMult').value);
+    <div class="main-circle">
+        <div class="cote-label">Côte prédite</div>
+        <div class="main-val" id="mainCote">×0.00</div>
+        <div class="sub-val" id="subCote">×0.00</div>
+        <div class="mini-time" id="mainTime">00:00:00</div>
+    </div>
 
-        if (!startTime || isNaN(targetMult)) {
-            alert("Mba fenoy tsara ny ora sy ny multiplicateur (10 miakatra)!");
-            return;
+    <div class="tours-container">
+        <div class="tour-card">
+            <div class="tour-title">TOUR 1</div>
+            <div class="tour-time" id="t1Time">00:00:00</div>
+            <div class="tour-val" id="t1Val">×0.00</div>
+        </div>
+        <div class="tour-card">
+            <div class="tour-title">TOUR 2</div>
+            <div class="tour-time" id="t2Time">00:00:00</div>
+            <div class="tour-val" id="t2Val">×0.00</div>
+        </div>
+    </div>
+
+    <div style="margin-top: 20px; font-size: 0.8rem; color: var(--accent-orange);">⭐ Tours prédits</div>
+    
+    <div class="prediction-list" id="miniList">
+        </div>
+
+    <button class="btn-predict" onclick="generatePremiumPrediction()">✨ PRÉDIRE</button>
+
+    <script>
+        function generatePremiumPrediction() {
+            const baseTime = document.getElementById('inputTime').value;
+            if(!baseTime) return alert("Ampidiro ny ora!");
+
+            if (navigator.vibrate) navigator.vibrate(100);
+
+            // Algorithm hamoahana isa (10 miakatra araka ny nangatahinao)
+            const getRandomCote = (min) => (Math.random() * (min + 20) + min).toFixed(2);
+            
+            // 1. Ny vokatra lehibe
+            const mainCote = getRandomCote(10);
+            document.getElementById('mainCote').innerText = "×" + mainCote;
+            document.getElementById('subCote').innerText = "×" + (mainCote / 3).toFixed(2);
+            document.getElementById('mainTime').innerText = baseTime;
+
+            // 2. Tour 1 sy Tour 2
+            document.getElementById('t1Val').innerText = "×" + getRandomCote(5);
+            document.getElementById('t2Val').innerText = "×" + mainCote;
+            document.getElementById('t1Time').innerText = baseTime;
+            document.getElementById('t2Time').innerText = baseTime;
+
+            // 3. Lisitra kely ambany
+            const listContainer = document.getElementById('miniList');
+            listContainer.innerHTML = ""; // Fafana ny teo aloha
+            
+            for(let i=0; i<4; i++) {
+                const val = getRandomCote(20);
+                const div = document.createElement('div');
+                div.className = 'mini-card';
+                div.innerHTML = `
+                    <div class="mini-val">×${val}</div>
+                    <div class="mini-time">${baseTime}</div>
+                `;
+                listContainer.appendChild(div);
+            }
         }
-
-        // Vibration ho an'ny finday
-        if (navigator.vibrate) navigator.vibrate(70);
-
-        // Algorithm kely mampifandray ny Ora sy ny Multiplicateur
-        // Eto ianao dia afaka manisy "logic" manokana
-        const timeParts = startTime.split(':');
-        const seed = parseInt(timeParts[0]) + parseInt(timeParts[1]) + parseInt(timeParts[2]);
-        
-        // Mamorona isa vinany mifanakaiky amin'ilay target fa misy kisendrasendra kely
-        let noise = (Math.random() * 5); // Miampy na mihena kely
-        let result = (targetMult + noise).toFixed(2);
-
-        // Mampiseho ny valiny
-        const resultCard = document.getElementById('resultCard');
-        const predictionText = document.getElementById('predictionText');
-        
-        predictionText.innerText = result + "x";
-        resultCard.style.display = "block";
-        
-        // Animation kely
-        resultCard.style.animation = "none";
-        setTimeout(() => { resultCard.style.animation = "flash 0.5s ease"; }, 10);
-    }
-</script>
-
+    </script>
 </body>
 </html>
