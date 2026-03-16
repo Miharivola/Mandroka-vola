@@ -3,153 +3,207 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mamiratra Falahidy v2.0</title>
+    <title>Mandroka Vola v2.0</title>
     <style>
         :root {
-            --bg-color: #0d1117;
-            --card-color: #161b22;
-            --accent-orange: linear-gradient(90deg, #ff8c00, #ffcc33);
-            --text-gray: #8b949e;
+            --bg-color: #0b0e14;
+            --card-color: #1a1d23;
+            --accent-orange: linear-gradient(135deg, #ff4500, #ffa500);
+            --text-gray: #a0a6b1;
         }
 
         body {
             background-color: var(--bg-color);
             color: white;
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Arial Black', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
+            overflow: hidden;
         }
 
         .app-container {
-            width: 350px;
+            width: 320px;
             text-align: center;
         }
 
         h1 {
             color: #ff8c00;
             text-transform: uppercase;
-            font-size: 1.2rem;
-            letter-spacing: 2px;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            text-shadow: 0 0 10px rgba(255, 140, 0, 0.3);
         }
 
         .version {
-            background: #21262d;
-            padding: 2px 10px;
-            border-radius: 10px;
-            font-size: 0.7rem;
+            background: #2c313a;
+            padding: 3px 12px;
+            border-radius: 20px;
+            font-size: 0.65rem;
             color: var(--text-gray);
+            font-weight: normal;
         }
 
         .main-card {
             background-color: var(--card-color);
-            border-radius: 20px;
+            border-radius: 25px;
             padding: 30px 20px;
-            margin-top: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            margin-top: 25px;
+            border: 1px solid #333;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
         }
 
         .label {
             color: var(--text-gray);
-            font-size: 0.9rem;
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 5px;
+            font-size: 0.8rem;
+            margin-bottom: 12px;
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: bold;
         }
 
         .time-grid {
             display: grid;
             grid-template-columns: 1fr auto 1fr auto 1fr;
-            gap: 10px;
+            gap: 8px;
             align-items: center;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
         }
 
         .time-box {
-            background: #21262d;
-            border-radius: 10px;
-            padding: 15px;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #ccc;
+            background: #252a33;
+            border-radius: 12px;
+            padding: 18px 5px;
+            font-size: 1.6rem;
+            color: #ffffff;
+            border: 1px solid #3d4451;
         }
 
-        .separator { color: #ff8c00; font-weight: bold; }
+        .separator { color: #ff4500; font-size: 1.5rem; }
 
         .multiplier-box {
-            background: #21262d;
-            border-radius: 10px;
-            padding: 20px;
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #ccc;
-            margin: 10px 0 30px 0;
-            position: relative;
+            background: #252a33;
+            border-radius: 15px;
+            padding: 25px;
+            font-size: 2.5rem;
+            color: #ffcc00;
+            margin: 10px 0 35px 0;
+            border: 1px dashed #555;
+            transition: all 0.3s;
         }
 
         .predict-btn {
             background: var(--accent-orange);
             border: none;
             width: 100%;
-            padding: 15px;
-            border-radius: 15px;
+            padding: 18px;
+            border-radius: 20px;
             color: white;
             font-weight: bold;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             cursor: pointer;
             text-transform: uppercase;
-            transition: transform 0.2s;
+            box-shadow: 0 5px 15px rgba(255, 69, 0, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
         }
 
-        .predict-btn:active { transform: scale(0.98); }
+        .predict-btn:active { 
+            transform: scale(0.96);
+            filter: brightness(1.2);
+        }
+
+        /* Animation rehefa mivoaka ny isa */
+        .flash {
+            animation: flash-anim 0.5s ease;
+        }
+
+        @keyframes flash-anim {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); color: #fff; }
+            100% { transform: scale(1); }
+        }
     </style>
 </head>
 <body>
 
 <div class="app-container">
-    <h1>Mamiratra Falahidy <span style="display:inline-block; width:15px; height:15px; background:#ff8c00; border-radius:3px;"></span></h1>
-    <span class="version">v2.0</span>
+    <h1>MANDROKA VOLA <span style="display:inline-block; width:12px; height:12px; background:#ff4500; border-radius:2px;"></span></h1>
+    <span class="version">v2.1 Premium</span>
 
     <div class="main-card">
-        <div class="label">🕒 Heure · Minute · Seconde</div>
+        <div class="label">🕒 ORA ANKEHITRINY</div>
         <div class="time-grid">
-            <div class="time-box" id="h">00</div>
+            <div class="time-box" id="h">--</div>
             <div class="separator">:</div>
-            <div class="time-box" id="m">00</div>
+            <div class="time-box" id="m">--</div>
             <div class="separator">:</div>
-            <div class="time-box" id="s">00</div>
+            <div class="time-box" id="s">--</div>
         </div>
 
-        <div class="label">📈 Multiplicateur</div>
-        <div class="multiplier-box">
-            <span id="mult">--</span> <span style="font-size: 1rem; color: #555;">x</span>
+        <div class="label">📈 MULTIPLICATEUR VINANY</div>
+        <div class="multiplier-box" id="mult-container">
+            <span id="mult">0.00</span><span style="font-size: 1.2rem; margin-left:5px;">x</span>
         </div>
 
-        <button class="predict-btn" onclick="generatePrediction()">✨ Prédire</button>
+        <button class="predict-btn" onclick="runPrediction()">
+            <span>🚀</span> PRÉDIRE
+        </button>
     </div>
 </div>
 
 <script>
-    // Logic an'ilay faminaniana (Prediction)
-    function generatePrediction() {
+    function runPrediction() {
+        // 1. Vibration kely (50 milisegondra)
+        if (navigator.vibrate) {
+            navigator.vibrate(50);
+        }
+
         const now = new Date();
+        const h = now.getHours();
+        const m = now.getMinutes();
+        const s = now.getSeconds();
+
+        // 2. Fanavaozana ny ora eo amin'ny sary
+        document.getElementById('h').innerText = String(h).padStart(2, '0');
+        document.getElementById('m').innerText = String(m).padStart(2, '0');
+        document.getElementById('s').innerText = String(s).padStart(2, '0');
+
+        // 3. ALGORITHM "MANDROKA VOLA"
+        // Kajy mifototra amin'ny ora: (Ora x Minitra) + Segondra
+        let seed = (h * m) + s;
+        let finalPredict;
+
+        // "Chance" logic
+        if (seed % 7 === 0) {
+            // Indraindray mamoaka isa be (Big win pattern)
+            finalPredict = (Math.random() * (30 - 10) + 10).toFixed(2);
+        } else {
+            // Matetika isa kely (Safe pattern)
+            finalPredict = (Math.random() * (3.5 - 1.1) + 1.1).toFixed(2);
+        }
+
+        // 4. Animation sy fampisehoana azy
+        const multDisplay = document.getElementById('mult');
+        const container = document.getElementById('mult-container');
         
-        // Alaina ny fotoana ankehitriny
-        document.getElementById('h').innerText = String(now.getHours()).padStart(2, '0');
-        document.getElementById('m').innerText = String(now.getMinutes()).padStart(2, '0');
-        document.getElementById('s').innerText = String(now.getSeconds()).padStart(2, '0');
-
-        // Alaina ny Multiplicateur (Random ohatra)
-        // Azonao ovaina eto ny "chance" hivoahan'ny isa
-        const randomMult = (Math.random() * 15 + 1).toFixed(2);
-        document.getElementById('mult').innerText = randomMult;
-
-        alert("Faminany vaovao azo!");
+        multDisplay.innerText = finalPredict;
+        container.classList.remove('flash');
+        void container.offsetWidth; // Reset animation
+        container.classList.add('flash');
     }
+
+    // Ataovy miseho avy hatrany ny ora vao misokatra
+    setInterval(() => {
+        const d = new Date();
+        document.getElementById('h').innerText = String(d.getHours()).padStart(2, '0');
+        document.getElementById('m').innerText = String(d.getMinutes()).padStart(2, '0');
+        document.getElementById('s').innerText = String(d.getSeconds()).padStart(2, '0');
+    }, 1000);
 </script>
 
 </body>
